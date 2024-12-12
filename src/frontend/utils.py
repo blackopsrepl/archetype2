@@ -18,8 +18,11 @@ def enable_chat_history(func):
             except:
                 pass
 
-        ### prints chat history ###
+        ### initializes messages if not present ###
         if "messages" not in st.session_state:
+            # Default to an initial greeting message
+            if "LANGUAGE" not in st.session_state:
+                st.session_state["LANGUAGE"] = "en"  # Set a default language if not set
             if st.session_state["LANGUAGE"] == "en":
                 st.session_state["messages"] = [
                     {
@@ -27,7 +30,7 @@ def enable_chat_history(func):
                         "content": "Hello, I am Clio, your personal task management assistant. How can I help you?",
                     }
                 ]
-            if st.session_state["LANGUAGE"] == "it":
+            elif st.session_state["LANGUAGE"] == "it":
                 st.session_state["messages"] = [
                     {
                         "role": "assistant",
@@ -45,6 +48,10 @@ def enable_chat_history(func):
 
 
 def display_msg(msg, author):
+    # Ensure the messages list exists in session_state
+    if "messages" not in st.session_state:
+        st.session_state["messages"] = []
+
     st.session_state.messages.append({"role": author, "content": msg})
     st.chat_message(author).write(msg)
 
