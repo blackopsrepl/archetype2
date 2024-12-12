@@ -24,5 +24,11 @@
                 "src/frontend/main.py",
             ],
         }
+    ],
+    "compounds": [
+        {
+            "name": "Compound",
+            "configurations": ["Python Debugger (Uvicorn): uvicorn src.backend.main:app --reload", "Python Debugger (Streamlit): streamlit run src/frontend/main.py"]
+        }
     ]
 }
