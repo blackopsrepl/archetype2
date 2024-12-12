@@ -44,20 +44,7 @@ def main():
             # Call the FastAPI backend to run the essay composition task
             result = submit_task(task_description)
 
-            # Check if the result is a dictionary (expected format)
-            if isinstance(result, dict):
-                # Handle case where the backend returns a JSON response
-                if "error" in result:
-                    st.error(f"Error: {result['error']}")
-                else:
-                    # Display the essay result from FastAPI
-                    essay = result.get("essay", "No essay generated.")
-                    st.success(f"Essay Generated: {essay}")
-                    display_msg(f"Essay Generated: {essay}", "assistant")
-            else:
-                # Handle case where the result is a string (unexpected but valid response)
-                st.success(f"Essay Generated: {result}")
-                display_msg(f"Essay Generated: {result}", "assistant")
+            display_msg(f"{result}", "assistant")
         else:
             st.error("Task description cannot be empty!")
 
