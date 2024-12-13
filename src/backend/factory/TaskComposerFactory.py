@@ -33,9 +33,9 @@ class TaskComposer(Archetype):
 
 
 class TaskComposerFactory(ArchetypeFactory):
-    def build(self) -> Archetype:
+    def build(self, llm) -> Archetype:
         self.task_planner = TaskComposer()
-        self.task_planner.set_llm("xai")
+        self.task_planner.set_llm(llm)
         self.task_planner.set_prompt_templates()
         self.task_planner.set_memory()
         self.task_planner.set_chain()

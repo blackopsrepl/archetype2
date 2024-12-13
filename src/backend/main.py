@@ -10,6 +10,7 @@ app = FastAPI()
 
 class SimpleTask(BaseModel):
     task_description: str
+    llm: str
 
 
 class DateRange(BaseModel):
@@ -27,13 +28,13 @@ class DateRange(BaseModel):
 
 @app.get("/run/essay")
 def run_essay(essay_composer_task: SimpleTask = Depends()):
-    essay_composer = EssayComposerFactory().produce()
+    essay_composer = EssayComposerFactory().produce(essay_composer_task.llm)
     return essay_composer.run_chain(essay_composer_task.task_description)
 
 
 @app.get("/run/task")
 def run_task(task_composer_task: SimpleTask = Depends()):
-    task_composer = TaskComposerFactory().produce()
+    task_composer = TaskComposerFactory().produce(task_composer_task.llm)
     return task_composer.run_chain(task_composer_task.task_description)
 
 

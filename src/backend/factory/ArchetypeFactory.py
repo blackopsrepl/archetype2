@@ -51,6 +51,6 @@ class ArchetypeFactory(ABC):
     def build(self) -> None:
         pass
 
-    def produce(self) -> Archetype:
-        product = self.build()
+    def produce(self, llm) -> Archetype:
+        product = self.build(llm)
         return product

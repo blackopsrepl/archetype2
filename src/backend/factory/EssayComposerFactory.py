@@ -55,9 +55,9 @@ class EssayComposer(Archetype):
 
 
 class EssayComposerFactory(ArchetypeFactory):
-    def build(self) -> Archetype:
+    def build(self, llm) -> Archetype:
         self.essay_planner = EssayComposer()
-        self.essay_planner.set_llm("xai")
+        self.essay_planner.set_llm(llm)
         self.essay_planner.set_prompt_templates()
         self.essay_planner.set_memory()
         self.essay_planner.set_chain()
