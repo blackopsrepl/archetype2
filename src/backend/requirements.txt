@@ -1,5 +1,6 @@
 langchain_community
 langchain_openai
+langchain_xai
 langchain_ollama
 fastapi
 uvicorn

@@ -1,7 +1,3 @@
-# from langchain_openai import ChatOpenAI
-
-from langchain_ollama.llms import OllamaLLM
-
 from langchain.schema import StrOutputParser
 from langchain.memory import ConversationBufferMemory
 from langchain.schema.runnable import RunnablePassthrough, RunnableLambda
@@ -13,10 +9,6 @@ import src.backend.factory.prompt_templates as prompt_templates
 
 
 class EssayComposer(Archetype):
-    def set_llm(self) -> None:
-        self.llm_cool = OllamaLLM(model="clio")
-        self.llm_hot = OllamaLLM(model="clio")
-
     def set_prompt_templates(self) -> None:
         self.t = prompt_templates.essay_composer
 
@@ -65,7 +57,7 @@ class EssayComposer(Archetype):
 class EssayComposerFactory(ArchetypeFactory):
     def build(self) -> Archetype:
         self.essay_planner = EssayComposer()
-        self.essay_planner.set_llm()
+        self.essay_planner.set_llm("xai")
         self.essay_planner.set_prompt_templates()
         self.essay_planner.set_memory()
         self.essay_planner.set_chain()

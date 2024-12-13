@@ -1,6 +1,7 @@
 from datetime import date
 from pydantic import BaseModel, field_validator
 from src.backend.factory.EssayComposerFactory import EssayComposerFactory
+from src.backend.factory.TaskComposerFactory import TaskComposerFactory
 from fastapi import Depends, FastAPI
 import uvicorn
 
@@ -28,6 +29,12 @@ class DateRange(BaseModel):
 def run_essay(essay_composer_task: SimpleTask = Depends()):
     essay_composer = EssayComposerFactory().produce()
     return essay_composer.run_chain(essay_composer_task.task_description)
+
+
+@app.get("/run/task")
+def run_task(task_composer_task: SimpleTask = Depends()):
+    task_composer = TaskComposerFactory().produce()
+    return task_composer.run_chain(task_composer_task.task_description)
 
 
 if __name__ == "__main__":
