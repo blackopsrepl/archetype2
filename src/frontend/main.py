@@ -16,7 +16,7 @@ def draw_title() -> None:
     st.session_state["archetype"] = configure_archetype()
 
     display_msg(
-        "Hello! I'm here to help you compose essays. Please enter a task description.",
+        "Hello! Please select the desired archetype from the left sidebar.",
         "assistant",
     )
 
