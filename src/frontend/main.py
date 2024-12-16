@@ -2,7 +2,8 @@ import streamlit as st
 import requests
 from typing import Dict, Callable, Any
 
-from src.frontend.utils.messages import enable_chat_history, display_msg
+from src.frontend.utils.messages import display_msg
+from src.frontend.utils.markdown_analyzer import MarkdownAnalyzer
 from src.frontend.sidebar import configure_model, configure_archetype
 from src.frontend.config import FASTAPI_URL
 
@@ -60,7 +61,9 @@ def generate_task(archetype: str) -> Callable[[None], None]:
                 url = f"{FASTAPI_URL}/run/task"
                 params = {"task_description": task_description, "llm": llm}
                 response = requests.get(url, params=params)
-                return response.json()
+                # return response.json()
+                analyzer = MarkdownAnalyzer(response.json())
+                return analyzer.identify_lists()
 
             case _:
                 raise ValueError("Invalid archetype")
