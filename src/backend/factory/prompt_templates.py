@@ -22,6 +22,6 @@ essay_composer = {
 task_splitter = {
     "split_template": PromptTemplate(
         input_variables=["text"],
-        template="Split the following task into a tree of required subtasks:\n{text}\n\n",
+        template="Split the following task into an accurate and concise tree of required subtasks:\n{text}\n\nYour output must be a markdown bullet list, with no additional comments.",
     ),
 }
