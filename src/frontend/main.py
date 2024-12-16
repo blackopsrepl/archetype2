@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 from typing import Dict, Callable, Any
 
-from src.frontend.utils import enable_chat_history, display_msg, StreamHandler
+from src.frontend.utils.messages import enable_chat_history, display_msg
 from src.frontend.sidebar import configure_model, configure_archetype
 from src.frontend.config import FASTAPI_URL
 
@@ -77,7 +77,6 @@ def process_input(task_description: str) -> None:
         display_msg(f"{result}", "assistant")
 
 
-@enable_chat_history
 def main():
 
     draw_title()
