@@ -22,6 +22,13 @@ essay_composer = {
 task_splitter = {
     "split_template": PromptTemplate(
         input_variables=["text"],
-        template="Split the following task into an accurate and concise tree of required subtasks:\n{text}\n\nYour output must be a markdown bullet list, with no additional comments.",
+        template="Split the following task into an accurate and concise tree of required subtasks:\n{text}\n\nYour output must be a markdown bullet list, with no additional comments.\n\n",
+    ),
+}
+
+task_evaluator = {
+    "evaluate_template": PromptTemplate(
+        input_variables=["text"],
+        template="Evaluate the elapsed time, in 30 minute units, for a competent human to complete the following task:\n{text}\n\nYour output must be a one integer, with no additional comments.\n\n",
     ),
 }

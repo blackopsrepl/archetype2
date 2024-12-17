@@ -82,7 +82,16 @@ def generate_task(archetype: str) -> Callable[[None], None]:
                 response = requests.get(url, params=params)
                 analyzer = MarkdownAnalyzer(response.json())
                 result = analyzer.identify_lists()["Unordered list"]
-                return unwrap_tasks_from_generated(result)
+                # return unwrap_tasks_from_generated(result)
+                result = unwrap_tasks_from_generated(result)
+                display_msg(f"{result}", "assistant")
+                url = f"{FASTAPI_URL}/run/evaluate"
+                merged_tasks = []
+                for task in result:
+                    params = {"task_description": task, "llm": llm}
+                    response = requests.get(url, params=params)
+                    merged_tasks.append((task, response.json()))
+                return merged_tasks
 
     return submit_task
 
