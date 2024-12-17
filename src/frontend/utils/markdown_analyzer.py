@@ -1,5 +1,5 @@
 import re
-from collections import defaultdict, Counter
+from collections import defaultdict
 
 
 class BlockToken:

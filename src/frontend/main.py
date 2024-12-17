@@ -45,6 +45,25 @@ def generate_input_form(archetype: str) -> Callable[[None], None]:
     return draw_input_form
 
 
+def unwrap_tasks_from_generated(result: list) -> list:
+    tasks = []
+    if isinstance(result, list):
+        # We expect result to be a list of lists, with only one entry
+        if isinstance(result[0], list):
+            # Unwrap the inner list of dictionaries
+            for task in result[0]:
+                if isinstance(task, dict) and "text" in task:
+                    tasks.append(task["text"])
+                else:
+                    print(f"Unexpected task format: {task}")
+        else:
+            print("Error: The first element of the result is not a list!")
+    else:
+        print("Error: 'Unordered list' is not a list!")
+
+    return tasks
+
+
 def generate_task(archetype: str) -> Callable[[None], None]:
     def submit_task(task_description: str, llm: str) -> Dict[str, Any]:
         """Function to submit the task description to the FastAPI backend using GET request."""
@@ -61,12 +80,9 @@ def generate_task(archetype: str) -> Callable[[None], None]:
                 url = f"{FASTAPI_URL}/run/task"
                 params = {"task_description": task_description, "llm": llm}
                 response = requests.get(url, params=params)
-                # return response.json()
                 analyzer = MarkdownAnalyzer(response.json())
-                return analyzer.identify_lists()
-
-            case _:
-                raise ValueError("Invalid archetype")
+                result = analyzer.identify_lists()["Unordered list"]
+                return unwrap_tasks_from_generated(result)
 
     return submit_task
 
